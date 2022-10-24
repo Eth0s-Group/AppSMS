@@ -10,31 +10,17 @@ client = pytn.Client(username, sid_cookie=sid, csrf_cookie=csrf)
 def weathercheck(msg):
     resp = ""
     city_name = "chicago"
+    state_code = "il"
+    country_code = "us"
     api_key = Credentials.WeatherKey()
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
-    timeout = time.perf_counter()
-    exitloop = 0
-    time.sleep(1)
-    msg.send_sms("Please enter city:")
-    new_messages = client.get_unread_messages()
-    checkagainst = ""
-    for message in new_messages:
-        message.mark_as_read()
-        checkagainst = message.content
-    while time.perf_counter() - timeout <= 60 and exitloop != 1:
-        time.sleep(1)
-        new_messages = client.get_unread_messages()
-        exitloop = 0
-        for message in new_messages:
-            message.mark_as_read()
-            resp = message.content #left off working here
-        if resp !=  checkagainst:
-            exitloop = 1
-            city_name = resp
-        else:
-            exitloop = 0
-            city_name = "chicago"
-    complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+    resp = ask("Enter city name:", msg)
+    if resp != "":
+        city_name = resp
+    resp = ask("Enter two letter state abbreviation:", msg)
+    if resp != "":
+        state_code = resp
+    complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "," + state_code + "," + country_code
     print(complete_url)
     response = requests.get(complete_url)
     x = response.json()
@@ -56,3 +42,16 @@ def weathercheck(msg):
     else:
         error1 = "invalid city. please send Weather command again to retry."
         msg.send_sms(error1)
+def ask(question, msg):
+    timeout = time.perf_counter()
+    exitloop = 0
+##    time.sleep(1)
+    msg.send_sms(question)
+    resp = ""
+    while time.perf_counter() - timeout <= 60 and exitloop != 1:
+        new_messages = client.get_unread_messages()
+        exitloop = 0
+        for message in new_messages:
+            if message.number == msg.number:
+                message.mark_as_read()
+                return message.content #left off working here
