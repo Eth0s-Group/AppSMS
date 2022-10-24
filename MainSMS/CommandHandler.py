@@ -4,6 +4,7 @@ import time
 import math
 import CommWeather
 import Credentials
+import asyncio
 username = Credentials.username()
 sid = Credentials.sid()
 csrf = Credentials.csrf()
@@ -16,7 +17,7 @@ def handler(msg):
         messagecontent = msg.content
         if str(messagecontent[0]) == "!":
             if messagecontent == "!weather" or messagecontent == "!Weather":
-                CommWeather.weathercheck(msg)
+                asyncio.run(CommWeather.weathercheck(msg))
             else:
                 msg.send_sms("unknown command, please check spelling. Contact Jopes#6969 on discord if you think this is an error")
 print("weather sucsessfully returned to user")

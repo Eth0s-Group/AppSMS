@@ -7,7 +7,7 @@ username = Credentials.username()
 sid = Credentials.sid()
 csrf = Credentials.csrf()
 client = pytn.Client(username, sid_cookie=sid, csrf_cookie=csrf)
-def weathercheck(msg):
+async def weathercheck(msg):
     resp = ""
     city_name = "chicago"
     state_code = "il"
