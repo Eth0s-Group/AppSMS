@@ -15,10 +15,10 @@ def weathercheck(msg):
     api_key = Credentials.WeatherKey()
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     resp = ask("Enter city name:", msg)
-    if resp != "":
+    if resp != "" and resp is not None:
         city_name = resp
     resp = ask("Enter two letter state abbreviation:", msg)
-    if resp != "":
+    if resp != "" and resp is not None:
         state_code = resp
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "," + state_code + "," + country_code
     print(complete_url)
