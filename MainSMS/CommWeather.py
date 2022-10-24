@@ -33,7 +33,13 @@ async def weathercheck(msg):
         current_humidity = y["humidity"]
         z = x["weather"]
         weather_description = z[0]["description"] 
-        msg.send_sms("weather in {}:\n{}\nTemperature: {}\u00B0\u0046\nAir Pressure: {}hpa\nHumidity: {}%".format(city_name, weather_description, current_temperature, current_pressure, current_humidity))
+        msg.send_sms("weather in " + str(city_name) + ":")
+        time.sleep(1)
+        msg.send_sms(str(weather_description))
+        time.sleep(1)
+        msg.send_sms("Temperature: " + str(current_temperature) + "\u00B0\u0046")
+        msg.send_sms("Air Pressure: " + str(current_pressure) +"hpa")
+        msg.send_sms("Humidity: " + str(current_humidity) + "%")
     else:
         error1 = "invalid city. please send Weather command again to retry."
         msg.send_sms(error1)
