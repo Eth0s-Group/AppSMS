@@ -36,7 +36,7 @@ def weathercheck(msg):
         time.sleep(1)
         msg.send_sms(str(weather_description))
         time.sleep(1)
-        msg.send_sms("Temperature: " + str(current_temperature) + "F")
+        msg.send_sms("Temperature: " + str(current_temperature) + "\u00B0\u0046")
         msg.send_sms("Air Pressure: " + str(current_pressure) +"hpa")
         msg.send_sms("Humidity: " + str(current_humidity) + "%")
     else:
