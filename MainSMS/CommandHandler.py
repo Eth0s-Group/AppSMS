@@ -17,7 +17,9 @@ def handler(msg):
         messagecontent = msg.content
         if str(messagecontent[0]) == "!":
             if messagecontent == "!weather" or messagecontent == "!Weather":
+                print("a")
                 asyncio.run(CommWeather.weathercheck(msg))
+                print("b")
             else:
                 msg.send_sms("unknown command, please check spelling. Contact Jopes#6969 on discord if you think this is an error")
 print("weather sucsessfully returned to user")
